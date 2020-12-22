@@ -9,12 +9,15 @@ def resourceAsStream = new File('.','clearRun.docx').newInputStream()
 def xwpfDocument = new org.apache.poi.xwpf.usermodel.XWPFDocument(resourceAsStream)
 def nameParagraph = xwpfDocument.paragraphs[0]
 
-def run = nameParagraph.runs[0]
+def run = nameParagraph.runs[1]
+println("run text: '"+ run.text()+"'")
 
-def lastIndexOfTArray = run.CTR.sizeOfTArray() - 1
+def lastIndexOfTArray = run.CTR.sizeOfTArray()
+println("lastIndexOfTArray: " + lastIndexOfTArray)
 
 for (i in 0..lastIndexOfTArray) {
+    println(i+ ":'" + run.getText(i)+"'")
     run.setText("", i)
 }
 
-assert nameParagraph.runs[0].text() == ""
+assert nameParagraph.runs[1].text() == ""
